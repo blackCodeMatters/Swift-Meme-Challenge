@@ -19,28 +19,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BmT-IQ-IrX">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="krf-iQ-Y22">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="x9Y-Jy-Yr2"/>
-                                    <barButtonItem title="Pick" id="CqW-S9-XVf">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Hnn-Qc-93D"/>
+                                    <barButtonItem title="Album" id="CqW-S9-XVf">
                                         <connections>
                                             <action selector="pickAnImage:" destination="BYZ-38-t0r" id="YHL-4a-oRd"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9IL-PA-krE"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dIG-ct-ibm"/>
                                     <barButtonItem style="plain" systemItem="camera" id="MNv-JS-LXm">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="iEG-Uo-x7V"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Ykr-Pp-DoE"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yEy-K4-8SB"/>
                                 </items>
                             </toolbar>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frd-uX-B6T" userLabel="upper text">
-                                <rect key="frame" x="20" y="64" width="374" height="80"/>
+                                <rect key="frame" x="20" y="128" width="374" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="iqi-qD-waM"/>
                                 </constraints>
@@ -49,30 +49,53 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saU-tR-p5Z" userLabel="lower text">
-                                <rect key="frame" x="20" y="713" width="374" height="80"/>
+                                <rect key="frame" x="20" y="693" width="374" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="rmu-3g-KoA"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVz-E4-fUe">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="xxc-vz-3Xp"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="uzj-aO-S73">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="action" id="Ohk-5Z-tPB">
+                                            <connections>
+                                                <action selector="shareButtonPressed:" destination="BYZ-38-t0r" id="MFs-wj-jXu"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="UHa-dD-2Rx">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="BYZ-38-t0r" id="MVs-mO-giY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="frd-uX-B6T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="0LX-RG-ifi"/>
-                            <constraint firstItem="krf-iQ-Y22" firstAttribute="top" secondItem="saU-tR-p5Z" secondAttribute="bottom" constant="20" id="2mc-Tp-3U4"/>
+                            <constraint firstItem="krf-iQ-Y22" firstAttribute="top" secondItem="saU-tR-p5Z" secondAttribute="bottom" constant="40" id="2mc-Tp-3U4"/>
                             <constraint firstItem="BmT-IQ-IrX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7Nl-uy-gSZ"/>
+                            <constraint firstItem="QVz-E4-fUe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Exa-bO-rem"/>
                             <constraint firstItem="BmT-IQ-IrX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GmN-yc-fiP"/>
+                            <constraint firstItem="frd-uX-B6T" firstAttribute="top" secondItem="QVz-E4-fUe" secondAttribute="bottom" constant="40" id="H9Z-8v-a59"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="LZc-R9-oy9"/>
+                            <constraint firstItem="BmT-IQ-IrX" firstAttribute="top" secondItem="QVz-E4-fUe" secondAttribute="bottom" id="MZx-fx-KqQ"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qn9-m3-6j4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="frd-uX-B6T" secondAttribute="trailing" constant="20" id="YYB-3d-F53"/>
+                            <constraint firstItem="QVz-E4-fUe" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="h8N-Kf-XDk"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hgC-ZL-tlx"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="top" secondItem="BmT-IQ-IrX" secondAttribute="bottom" id="hvw-HD-9Lr"/>
+                            <constraint firstItem="QVz-E4-fUe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="idb-5g-QBg"/>
                             <constraint firstItem="saU-tR-p5Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="jDb-0s-KmD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="saU-tR-p5Z" secondAttribute="trailing" constant="20" id="mCv-qb-9Hc"/>
-                            <constraint firstItem="BmT-IQ-IrX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n2z-im-N5w"/>
-                            <constraint firstItem="frd-uX-B6T" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="naR-JR-jjf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -81,6 +104,8 @@
                         <outlet property="imagePickerView" destination="BmT-IQ-IrX" id="MuT-P8-471"/>
                         <outlet property="lowerTextField" destination="saU-tR-p5Z" id="5ee-gg-dnS"/>
                         <outlet property="lowerToolBar" destination="krf-iQ-Y22" id="qJR-GA-WyE"/>
+                        <outlet property="shareButton" destination="Ohk-5Z-tPB" id="z9p-a9-f9R"/>
+                        <outlet property="upperNavigationBar" destination="QVz-E4-fUe" id="Ac9-gw-cIT"/>
                         <outlet property="upperTextField" destination="frd-uX-B6T" id="K0W-jV-5RZ"/>
                     </connections>
                 </viewController>
