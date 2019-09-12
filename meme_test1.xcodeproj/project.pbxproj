@@ -13,6 +13,7 @@
 		D90B5DF223248F6500D006FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D90B5DF123248F6500D006FA /* Assets.xcassets */; };
 		D90B5DF523248F6500D006FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90B5DF323248F6500D006FA /* LaunchScreen.storyboard */; };
 		D93C1ADE23272F92001C6901 /* MemeFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C1ADD23272F92001C6901 /* MemeFiles.swift */; };
+		D99246A7232A853F000DE4DE /* impact.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D99246A6232A853E000DE4DE /* impact.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D90B5DF423248F6500D006FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D90B5DF623248F6500D006FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D93C1ADD23272F92001C6901 /* MemeFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeFiles.swift; sourceTree = "<group>"; };
+		D99246A6232A853E000DE4DE /* impact.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = impact.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +65,18 @@
 				D90B5DF123248F6500D006FA /* Assets.xcassets */,
 				D90B5DF323248F6500D006FA /* LaunchScreen.storyboard */,
 				D90B5DF623248F6500D006FA /* Info.plist */,
+				D99246A6232A853E000DE4DE /* impact.ttf */,
+				D99246A5232A84DC000DE4DE /* New Group */,
 			);
 			path = meme_test1;
+			sourceTree = "<group>";
+		};
+		D99246A5232A84DC000DE4DE /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			path = "../New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D99246A7232A853F000DE4DE /* impact.ttf in Resources */,
 				D90B5DF523248F6500D006FA /* LaunchScreen.storyboard in Resources */,
 				D90B5DF223248F6500D006FA /* Assets.xcassets in Resources */,
 				D90B5DF023248F5B00D006FA /* Main.storyboard in Resources */,

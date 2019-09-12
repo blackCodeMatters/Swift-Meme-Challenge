@@ -101,6 +101,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraButton" destination="MNv-JS-LXm" id="D7I-35-Tcs"/>
+                        <outlet property="cancelButton" destination="UHa-dD-2Rx" id="6U1-b9-kgL"/>
                         <outlet property="imagePickerView" destination="BmT-IQ-IrX" id="MuT-P8-471"/>
                         <outlet property="lowerTextField" destination="saU-tR-p5Z" id="5ee-gg-dnS"/>
                         <outlet property="lowerToolBar" destination="krf-iQ-Y22" id="qJR-GA-WyE"/>
