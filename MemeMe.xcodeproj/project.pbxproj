@@ -66,17 +66,8 @@
 				D90B5DF323248F6500D006FA /* LaunchScreen.storyboard */,
 				D90B5DF623248F6500D006FA /* Info.plist */,
 				D99246A6232A853E000DE4DE /* impact.ttf */,
-				D99246A5232A84DC000DE4DE /* New Group */,
 			);
 			path = meme_test1;
-			sourceTree = "<group>";
-		};
-		D99246A5232A84DC000DE4DE /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			path = "../New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D90B5DE223248F5A00D006FA /* Build configuration list for PBXProject "meme_test1" */;
+			buildConfigurationList = D90B5DE223248F5A00D006FA /* Build configuration list for PBXProject "MemeMe" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -334,7 +325,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D90B5DE223248F5A00D006FA /* Build configuration list for PBXProject "meme_test1" */ = {
+		D90B5DE223248F5A00D006FA /* Build configuration list for PBXProject "MemeMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D90B5DF723248F6500D006FA /* Debug */,

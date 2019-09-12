@@ -24,34 +24,36 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="krf-iQ-Y22">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Hnn-Qc-93D"/>
-                                    <barButtonItem title="Album" id="CqW-S9-XVf">
+                                    <barButtonItem style="done" systemItem="flexibleSpace" id="Hnn-Qc-93D"/>
+                                    <barButtonItem title="Album" style="done" id="CqW-S9-XVf">
                                         <connections>
                                             <action selector="pickAnImage:" destination="BYZ-38-t0r" id="YHL-4a-oRd"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dIG-ct-ibm"/>
-                                    <barButtonItem style="plain" systemItem="camera" id="MNv-JS-LXm">
+                                    <barButtonItem style="done" systemItem="flexibleSpace" id="dIG-ct-ibm"/>
+                                    <barButtonItem style="done" systemItem="camera" id="MNv-JS-LXm">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="iEG-Uo-x7V"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yEy-K4-8SB"/>
+                                    <barButtonItem style="done" systemItem="flexibleSpace" id="yEy-K4-8SB"/>
                                 </items>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frd-uX-B6T" userLabel="upper text">
-                                <rect key="frame" x="20" y="128" width="374" height="80"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frd-uX-B6T" userLabel="upper text">
+                                <rect key="frame" x="20" y="103" width="374" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="iqi-qD-waM"/>
+                                    <constraint firstAttribute="height" constant="60" id="iqi-qD-waM"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="32"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saU-tR-p5Z" userLabel="lower text">
-                                <rect key="frame" x="20" y="693" width="374" height="80"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="saU-tR-p5Z" userLabel="lower text">
+                                <rect key="frame" x="20" y="738" width="374" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="rmu-3g-KoA"/>
+                                    <constraint firstAttribute="height" constant="60" id="rmu-3g-KoA"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
@@ -62,14 +64,17 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="xxc-vz-3Xp"/>
                                 </constraints>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <navigationItem id="uzj-aO-S73">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="action" id="Ohk-5Z-tPB">
+                                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="action" id="Ohk-5Z-tPB">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="shareButtonPressed:" destination="BYZ-38-t0r" id="MFs-wj-jXu"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="UHa-dD-2Rx">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="cancel" id="UHa-dD-2Rx">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="cancelButtonPressed:" destination="BYZ-38-t0r" id="MVs-mO-giY"/>
                                             </connections>
@@ -81,11 +86,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="frd-uX-B6T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="0LX-RG-ifi"/>
-                            <constraint firstItem="krf-iQ-Y22" firstAttribute="top" secondItem="saU-tR-p5Z" secondAttribute="bottom" constant="40" id="2mc-Tp-3U4"/>
+                            <constraint firstItem="krf-iQ-Y22" firstAttribute="top" secondItem="saU-tR-p5Z" secondAttribute="bottom" constant="15" id="2mc-Tp-3U4"/>
                             <constraint firstItem="BmT-IQ-IrX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7Nl-uy-gSZ"/>
                             <constraint firstItem="QVz-E4-fUe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Exa-bO-rem"/>
                             <constraint firstItem="BmT-IQ-IrX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GmN-yc-fiP"/>
-                            <constraint firstItem="frd-uX-B6T" firstAttribute="top" secondItem="QVz-E4-fUe" secondAttribute="bottom" constant="40" id="H9Z-8v-a59"/>
+                            <constraint firstItem="frd-uX-B6T" firstAttribute="top" secondItem="QVz-E4-fUe" secondAttribute="bottom" constant="15" id="H9Z-8v-a59"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="LZc-R9-oy9"/>
                             <constraint firstItem="BmT-IQ-IrX" firstAttribute="top" secondItem="QVz-E4-fUe" secondAttribute="bottom" id="MZx-fx-KqQ"/>
                             <constraint firstItem="krf-iQ-Y22" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qn9-m3-6j4"/>

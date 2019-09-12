@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
+    //Outlets
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var upperTextField: UITextField!
@@ -19,8 +20,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
+    //Variables and Constants
     var memedImage: UIImage!
     var activeTextField: UITextField?
+    
+    let upperTextDefault = "ADD IMAGE"
+    let lowerTextDefault = "TO BEGIN"
     
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.black,
@@ -29,19 +34,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSAttributedString.Key.strokeWidth: -3.0
     ]
     
+    //Lifecycle methods
     override func viewWillAppear(_ animated: Bool) {
-        imagePickerView.backgroundColor = UIColor.gray
+        imagePickerView.backgroundColor = UIColor.lightGray
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
         upperTextField.backgroundColor = UIColor.clear
         upperTextField.defaultTextAttributes = memeTextAttributes
         upperTextField.textAlignment = .center
-        upperTextField.text = "TOP"
+        upperTextField.text = upperTextDefault
         
         lowerTextField.backgroundColor = UIColor.clear
         lowerTextField.defaultTextAttributes = memeTextAttributes
         lowerTextField.textAlignment = .center
-        lowerTextField.text = "BOTTOM"
+        lowerTextField.text = lowerTextDefault
         
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
@@ -64,8 +70,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         unsubscribeFromKeyboardNotifications()
     }
     
+    //Methods
     func checkShare() {
-        //test if image is empty
         if imagePickerView.image == nil {
             shareButton.isEnabled = false
             cancelButton.isEnabled = false
@@ -98,7 +104,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
         
         guard let image = info[.originalImage] as? UIImage else {
-            fatalError("this didn't work")
+            fatalError("Image selection failed")
         }
         
         imagePickerView.image = image
@@ -117,15 +123,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
-        if textField.text! == "TOP" {
+        if textField.text! == upperTextDefault {
             upperTextField.text! = ""
-        } else if textField.text! == "BOTTOM" {
+        } else if textField.text! == lowerTextDefault {
             lowerTextField.text! = ""
-        } else {
-            //textField has characters
         }
     }
-    
+        
     func subscribeToKeyboardNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -155,56 +159,46 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return keyboardSize.cgRectValue.height
     }
     
-    func generateMemedImage() -> UIImage {
+    func generateMemedImage() {
         
-        // Hide toolbar and navbar
         lowerToolBar.isHidden = true
         upperNavigationBar.isHidden = true
         
-        // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         memedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // show toolbar and navbar
         lowerToolBar.isHidden = false
         upperNavigationBar.isHidden = false
-        
-        return memedImage
+
     }
     
     func save() {
-        let meme = Memes.Meme(upperText: upperTextField.text!, lowerText: lowerTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        _ = Memes.Meme(upperText: upperTextField.text!, lowerText: lowerTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
     }
     
     @IBAction func shareButtonPressed(_ sender: Any) {
-        print("share button pressed")
         generateMemedImage()
         
-        let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        let controller = UIActivityViewController(activityItems: [memedImage as Any], applicationActivities: nil)
         self.present(controller, animated: true, completion: nil)
-        //controller.completionWithItemsHandler
-        controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed:
-            Bool, arrayReturnedItems: [Any]?, error: Error?) in
+        controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, arrayReturnedItems: [Any]?, error: Error?) in
             if completed {
-                print("share completed")
                 self.save()
-                return
+                self.dismiss(animated: false, completion: nil)
             } else {
-                print("cancel")
+                //share cancelled
             }
             if let shareError = error {
                 print("error while sharing: \(shareError.localizedDescription)")
             }
         }
-        
-        //self.dismiss(animated: false, completion: nil)
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        upperTextField.text = "TOP"
-        lowerTextField.text = "BOTTOM"
+        upperTextField.text = "ADD IMAGE"
+        lowerTextField.text = "TO BEGIN"
         imagePickerView.image = nil
         checkShare()
     }
