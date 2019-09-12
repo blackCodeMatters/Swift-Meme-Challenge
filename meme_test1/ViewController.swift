@@ -69,7 +69,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             shareButton.isEnabled = false
         } else {
             shareButton.isEnabled = true
-            Memes.Meme(upperText: "", lowerText: "", originalImage: imagePickerView.image!, memedImage: imagePickerView.image!)
         }
     }
     
