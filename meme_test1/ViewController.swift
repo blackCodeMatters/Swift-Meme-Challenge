@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate {
 
     //Outlets
     @IBOutlet weak var imagePickerView: UIImageView!
@@ -16,7 +16,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var upperTextField: UITextField!
     @IBOutlet weak var lowerTextField: UITextField!
     @IBOutlet weak var upperNavigationBar: UINavigationBar!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lowerToolBar: UIToolbar!
+    @IBOutlet weak var pinchLabel: UILabel!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
@@ -36,24 +38,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //Lifecycle methods
     override func viewWillAppear(_ animated: Bool) {
-        imagePickerView.backgroundColor = UIColor.lightGray
+        super.viewWillAppear(animated)
+        
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
-        upperTextField.backgroundColor = UIColor.clear
-        upperTextField.defaultTextAttributes = memeTextAttributes
-        upperTextField.textAlignment = .center
-        upperTextField.text = upperTextDefault
+        configureTextField(textField: upperTextField, defaultText: upperTextDefault)
+        configureTextField(textField: lowerTextField, defaultText: lowerTextDefault)
         
-        lowerTextField.backgroundColor = UIColor.clear
-        lowerTextField.defaultTextAttributes = memeTextAttributes
-        lowerTextField.textAlignment = .center
-        lowerTextField.text = lowerTextDefault
-        
-        super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
         
         checkShare()
-        
+        checkBackground()
     }
     
     override func viewDidLoad() {
@@ -61,7 +56,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         self.upperTextField.delegate = self
         self.lowerTextField.delegate = self
-
+        
+        _ = viewForZooming(in: scrollView)
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,35 +67,53 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         unsubscribeFromKeyboardNotifications()
     }
     
-    //Methods
-    func checkShare() {
+    //Methods    
+    func configureTextField(textField: UITextField, defaultText: String) {
+        textField.backgroundColor = UIColor.clear
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.text = defaultText
+    }
+    
+    func checkBackground() {
         if imagePickerView.image == nil {
-            shareButton.isEnabled = false
-            cancelButton.isEnabled = false
-            upperTextField.isEnabled = false
-            lowerTextField.isEnabled = false
-            
+            imagePickerView.backgroundColor = UIColor.lightGray
+            pinchLabel.isHidden = true
         } else {
-            shareButton.isEnabled = true
-            cancelButton.isEnabled = true
-            upperTextField.isEnabled = true
-            lowerTextField.isEnabled = true
+            imagePickerView.backgroundColor = UIColor.black
+            pinchLabel.isHidden = false
+            UIView.animate(withDuration: 5.0, animations: { () -> Void in
+                self.pinchLabel.alpha = 0
+                self.pinchLabel.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
+            })
         }
     }
     
-    @IBAction func pickAnImageFromCamera(_ sender: Any) {
+    func checkShare() {
+        let isEnabled = imagePickerView.image != nil
+        shareButton.isEnabled = isEnabled
+        cancelButton.isEnabled = isEnabled
+        upperTextField.isEnabled = isEnabled
+        lowerTextField.isEnabled = isEnabled
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imagePickerView
+    }
+    
+    func presentImagagePickerWith(sourceType: UIImagePickerController.SourceType) {
         let pickerController = UIImagePickerController()
+        pickerController.sourceType = sourceType
         pickerController.delegate = self
-        pickerController.sourceType = .camera
         present(pickerController, animated: true, completion: nil)
     }
     
+    @IBAction func pickAnImageFromCamera(_ sender: Any) {
+        presentImagagePickerWith(sourceType: .camera)
+    }
+    
     @IBAction func pickAnImage(_ sender: Any) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = .photoLibrary
-        present(pickerController, animated: true, completion: nil)
-        
+        presentImagagePickerWith(sourceType: .photoLibrary)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
@@ -123,13 +138,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
-        if textField.text! == upperTextDefault {
-            upperTextField.text! = ""
-        } else if textField.text! == lowerTextDefault {
-            lowerTextField.text! = ""
+        if (textField.text! == upperTextDefault) || (textField.text! == lowerTextDefault) {
+            textField.text! = ""
         }
     }
-        
+    
     func subscribeToKeyboardNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -159,18 +172,53 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return keyboardSize.cgRectValue.height
     }
     
+    func configureBars(_ isHidden: Bool) {
+        upperNavigationBar.isHidden = isHidden
+        lowerToolBar.isHidden = isHidden
+    }
+    
     func generateMemedImage() {
         
-        lowerToolBar.isHidden = true
-        upperNavigationBar.isHidden = true
+        let frameSize = self.view.frame.size
+        let statusBarOrientation = UIDevice.current.orientation
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        var statusBarHeight: CGFloat
+        if statusBarOrientation.isPortrait {
+            statusBarHeight =  UIApplication.shared.statusBarFrame.size.height
+        } else {
+            statusBarHeight = UIApplication.shared.statusBarFrame.size.width
+        }
+ 
+        let navigationBarSize = self.upperNavigationBar.intrinsicContentSize
+        let navigationBarHeight = navigationBarSize.height
+        print(navigationBarHeight)
+        
+        let toolBarSize = self.lowerToolBar.intrinsicContentSize
+        let toolBarHeight = toolBarSize.height
+        let toolBarWidth = toolBarSize.width
+        print(toolBarHeight)
+        print(toolBarWidth)
+        
+        let whiteSpace = statusBarHeight + navigationBarHeight
+        
+        let saveImageHeight = frameSize.height - whiteSpace - toolBarHeight
+        let saveImageWidth = frameSize.width
+        
+        let heightRatio = saveImageHeight / frameSize.height
+        let widthRatio = saveImageWidth / frameSize.width
+        
+        let cropFrame = CGRect(x: 0, y: -whiteSpace, width: saveImageWidth, height: saveImageHeight)
+        let crop = CGSize(width: saveImageWidth * widthRatio, height: saveImageHeight * heightRatio)
+        configureBars(true)
+        
+        //UIGraphicsBeginImageContext(self.view.frame.size)
+        UIGraphicsBeginImageContext(crop) //size of image returned
+        //view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        view.drawHierarchy(in: cropFrame, afterScreenUpdates: true)
         memedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        lowerToolBar.isHidden = false
-        upperNavigationBar.isHidden = false
+        configureBars(false)
 
     }
     
@@ -201,6 +249,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         lowerTextField.text = "TO BEGIN"
         imagePickerView.image = nil
         checkShare()
+        checkBackground()
     }
     
 }
