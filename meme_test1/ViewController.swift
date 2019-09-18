@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate {
 
@@ -17,6 +16,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var upperTextField: UITextField!
     @IBOutlet weak var lowerTextField: UITextField!
     @IBOutlet weak var upperNavigationBar: UINavigationBar!
+    @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lowerToolBar: UIToolbar!
     @IBOutlet weak var pinchLabel: UILabel!
@@ -59,7 +59,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.lowerTextField.delegate = self
         
         _ = viewForZooming(in: scrollView)
-        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -145,14 +144,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func subscribeToKeyboardNotifications() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
     }
     
     func unsubscribeFromKeyboardNotifications() {
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
@@ -167,7 +163,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
-        
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.cgRectValue.height
@@ -179,49 +174,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func generateMemedImage() {
-        
-        let frameSize = self.view.frame.size
-        let statusBarOrientation = UIDevice.current.orientation
-        
-        //let imageSize = self.imagePickerView.image!.size
-        
-        var statusBarHeight: CGFloat
-        if statusBarOrientation.isPortrait {
-            statusBarHeight =  UIApplication.shared.statusBarFrame.size.height
-        } else {
-            statusBarHeight = UIApplication.shared.statusBarFrame.size.width
-        }
- 
-        let navigationBarSize = self.upperNavigationBar.intrinsicContentSize
-        let navigationBarHeight = navigationBarSize.height
-        
-        let toolBarSize = self.lowerToolBar.intrinsicContentSize
-        let toolBarHeight = toolBarSize.height
-        
-        let safeAreaHeight = self.view.safeAreaInsets.bottom + self.view.safeAreaInsets.top
-        
-        let whiteSpace = statusBarHeight + navigationBarHeight + safeAreaHeight
-        
-        let saveImageHeight = frameSize.height - whiteSpace - toolBarHeight
-        let saveImageWidth = frameSize.width
-        
-        let heightRatio = saveImageHeight / frameSize.height
-        let widthRatio = saveImageWidth / frameSize.width
-        
-        let cropFrame = CGRect(x: 0, y: -toolBarHeight, width: saveImageWidth, height: saveImageHeight)
-        let crop = CGSize(width: saveImageWidth * widthRatio, height: saveImageHeight * heightRatio)
- 
         configureBars(true)
         
-        //UIGraphicsBeginImageContext(self.view.frame.size)
-        UIGraphicsBeginImageContext(crop) //size of image returned
-        //view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
-        view.drawHierarchy(in: cropFrame, afterScreenUpdates: true)
+        UIGraphicsBeginImageContextWithOptions(self.innerView.frame.size, innerView.isOpaque, 0.0)
+        innerView.drawHierarchy(in: self.innerView.bounds, afterScreenUpdates: true)
         memedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         configureBars(false)
-
     }
     
     func save() {
@@ -247,8 +207,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        upperTextField.text = "ADD IMAGE"
-        lowerTextField.text = "TO BEGIN"
+        upperTextField.text = upperTextDefault
+        lowerTextField.text = lowerTextDefault
         imagePickerView.image = nil
         checkShare()
         checkBackground()
