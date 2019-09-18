@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate {
 
@@ -182,6 +183,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let frameSize = self.view.frame.size
         let statusBarOrientation = UIDevice.current.orientation
         
+        //let imageSize = self.imagePickerView.image!.size
+        
         var statusBarHeight: CGFloat
         if statusBarOrientation.isPortrait {
             statusBarHeight =  UIApplication.shared.statusBarFrame.size.height
@@ -191,15 +194,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
  
         let navigationBarSize = self.upperNavigationBar.intrinsicContentSize
         let navigationBarHeight = navigationBarSize.height
-        print(navigationBarHeight)
         
         let toolBarSize = self.lowerToolBar.intrinsicContentSize
         let toolBarHeight = toolBarSize.height
-        let toolBarWidth = toolBarSize.width
-        print(toolBarHeight)
-        print(toolBarWidth)
         
-        let whiteSpace = statusBarHeight + navigationBarHeight
+        let safeAreaHeight = self.view.safeAreaInsets.bottom + self.view.safeAreaInsets.top
+        
+        let whiteSpace = statusBarHeight + navigationBarHeight + safeAreaHeight
         
         let saveImageHeight = frameSize.height - whiteSpace - toolBarHeight
         let saveImageWidth = frameSize.width
@@ -207,8 +208,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let heightRatio = saveImageHeight / frameSize.height
         let widthRatio = saveImageWidth / frameSize.width
         
-        let cropFrame = CGRect(x: 0, y: -whiteSpace, width: saveImageWidth, height: saveImageHeight)
+        let cropFrame = CGRect(x: 0, y: -toolBarHeight, width: saveImageWidth, height: saveImageHeight)
         let crop = CGSize(width: saveImageWidth * widthRatio, height: saveImageHeight * heightRatio)
+ 
         configureBars(true)
         
         //UIGraphicsBeginImageContext(self.view.frame.size)
